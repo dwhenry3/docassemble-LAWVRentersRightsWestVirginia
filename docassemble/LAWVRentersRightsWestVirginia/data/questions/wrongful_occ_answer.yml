@@ -9,6 +9,7 @@ metadata:
     - name: Dane W. Henry, Esq.
       organization: Legal Aid of West Virginia, Inc.
   revision_date: 2024-08-12
+  exit url: https://legalaidwv.org/renters-rights-west-virginia
 ---
 features:
   javascript: docassemble.LAWVCommon:data/static/force_lightmode.js
