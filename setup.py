@@ -44,7 +44,7 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
     return out
 
 setup(name='docassemble.LAWVRentersRightsWestVirginia',
-      version='0.0.9',
+      version='0.0.10',
       description=('A docassemble extension.'),
       long_description='Source package for the LAWV Renters Rights West Virginia project that will allow users to create documents for: \r\n1) Answer to Wrongful Occupation\r\n2) Breach of Warranty of Habitability Letter\r\n3) Petition for Appeal from Bench Trial\r\n4) Public Housing Authority Informal Hearing Request\r\n5) Return of Security Deposit Letter\r\n6) Return of Personal Property Letter',
       long_description_content_type='text/markdown',

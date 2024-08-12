@@ -1,14 +1,15 @@
 metadata:
   title: |
-    Legal Help for Renters - Warranty of Habitability Letter
+    Renters Rights West Virginia - Letter to Landlord Requesting Repairs
   short title: |
-    Warranty of Habitability Letter
+    Letter to Landlord Requesting Repairs
   description: |
-    Warranty of Habitability Letter
+    Letter to Landlord Requesting Repairs
   authors:
     - name: Dane W. Henry, Esq.
       organization: Legal Aid of West Virginia, Inc.
-  revision_date: 2024-05-13
+  revision_date: 2024-08-12
+  exit url: https://legalaidwv.org/renters-rights-west-virginia
 ---
 features:
   javascript: docassemble.LAWVCommon:data/static/force_lightmode.js
@@ -22,8 +23,52 @@ objects:
   - client: Individual
   - ll: Individual
 ---
+images:
+  as_is_paper_img: as_is_paper.png
+  habitability_img: compilation.jpg  
+  icon_form_img: icon_form.png
+  icon_time_img: icon_time.png
+  people_img: people.png
+  room_conditions_img: room_conditions.png
+  success_exit_img: success_exit.png
+  success_exit_2_img: success_exit_2.png
+---
+ga id: warrantyIntroduction
+question: |
+  #### Introduction
+
+  # Welcome to the Renters Rights West Virginia[BR]  
+
+  # Letter to Landlord Requesting Repairs Tool
+subquestion: |
+  ### Why use this tool?
+  <p class="flex center"><span>This form will help you write a letter to your landlord requesting that they fix a problem with your rental unit to make it "safe" and "habitable."</span></p>  
+
+  ### What to expect
+  <p class="flex center">[FILE icon_time_img, 50px]<span>Depending on your situation this will take between 5 and 15 minutes.</span></p>
+
+  ### What do you need?
+  <p class="flex center">[FILE icon_form_img, 50px]<span>Any photos or communications you have of the conditions.  The tool will allow you to upload this information to be included in the letter to your landlord.</span></p>
+  
+  ***
+  ###Terms of Use:
+  ####<span style="color:black;font-weight:100;">Legal Aid of West Virginia is a non-profit law firm that provides free legal help.  This tool was developed by Legal Aid to provide information and to make it easier to fill out necessary forms.  This tool does not take the place of an attorney-client relationship. Legal Aid is not your attorney.  If you have questions about your specific situation, you should seek legal help.  The information on this tool is based on West Virginia law.  By using this tool, I agree that I have read and understand the information on this page.  If you wish to apply for Legal Aid of West Virginia’s services, you may do so here: [https://legalaidwv.org](https://legalaidwv.org/)
+  
+  <span>
+field: introduction
+buttons:
+  - I Agree: continue
+  - Exit: exit
+    color: danger
+under: |
+
+  ***
+  #### <span style="color:red">Note:</span> Legal Aid of West Virginia does not retain any of the information entered. Sessions are encrypted and only available to the user. At the conclusion of the process, all data entered is wiped to ensure user privacy.
+  ***
+---
 ga id: warrantyBreach
 question: |
+  [FILE habitability_img, 100%][BR]
   Are any of the following present?
 subquestion: |
   Please select all the apply
@@ -38,9 +83,15 @@ fields:
       - Untreated rodent/bug infestation: infested
       - No smoke alarms: smoke
       - Health, Safety, Fire, or Housing code violation: violation
+right: |
+  ***
+  #### Related Information
+  ***
+  [YOUTUBE ytgs-FqL9SE]
 ---
 ga id: warrantyDuration
 question: |
+  [FILE as_is_paper_img, 100%][BR]
   How long has the problem existed?
 field: duration
 choices:
@@ -49,6 +100,7 @@ choices:
 ---
 ga id: warrantyEvidence
 question: |
+  [FILE room_conditions_img, 100%][BR]
   Do you have evidence of the problem to include with the letter?
 subquestion: |
   Evidence can be photos of the problem or texts/communications
@@ -71,6 +123,7 @@ continue button field: upload_review
 ---
 ga id: warrantyPersonalInformation
 question: |
+  [FILE people_img, 100%][BR]
   Let's get some information about you and the landlord
 fields:
   - note: |
@@ -102,7 +155,9 @@ fields:
   - Zip: ll.address.zip
 ---
 ga id: warrantyEndpoint
-question: Final Information
+question: |
+  [FILE success_exit_img, 100%][BR]
+  Final Information
 subquestion: |
   You can download the files for the **Warranty of Habitability Letter** below.
 
@@ -147,6 +202,7 @@ content: |
 ga id: warrantySuccessExit
 event: success_exit
 question: |
+  [FILE success_exit_2_img, 100%][BR]
   Thank you for using the tool!
 subquestion: |
   We hope this tool was useful.  Once you click exit below, your information will be purged
@@ -159,6 +215,8 @@ back button label: |
 ---
 mandatory: True
 code: |
+  if introduction == 'exit':
+    command('exit')
   if warranty:
     duration
     if evidence:

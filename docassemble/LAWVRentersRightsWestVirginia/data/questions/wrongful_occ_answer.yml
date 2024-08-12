@@ -41,6 +41,8 @@ images:
   people_inside_img: people_inside.png
   petition_claims_img: petition_claims.png
   room_img: room.png
+  success_exit_img: success_exit.png
+  success_exit_2_img: success_exit_2.png
 ---
 ga id: woaIntroduction
 question: |
@@ -104,8 +106,7 @@ yesno: hearing_held
 ---
 ga id: woaCaseInformation
 question: |
-  [FILE people_img, 100%]  
-
+  [FILE people_img, 100%][BR]
   Let's get some information about the case and who is involved
 fields:
   - note: |
@@ -202,8 +203,7 @@ yesno: rent_owed
 ---
 ga id: woaWarrantyBreach
 question: |
-  [FILE habitability_img, 100%]  
-
+  [FILE habitability_img, 100%][BR]
   Are any of the following present?
 subquestion: |
   Please select all that apply
@@ -444,7 +444,9 @@ fields:
     rows: 6
 ---
 ga id: woaShortEndpoint
-question: Final Information
+question: |
+  [FILE success_exit_img, 100%][BR]
+  Final Information
 subquestion: |
   You can download the PDFs for your **Wrongful Occupation Answer** below.  
   
@@ -476,7 +478,9 @@ attachment:
       - "d1_address_one_line": ${ r.address.on_one_line() }
 ---
 ga id: woaLongEndpoint
-question: Final Information
+question: |
+  [FILE success_exit_img, 100%][BR]
+  Final Information
 subquestion: |
   You can download the PDFs for your **Wrongful Occupation Answer** below.  
   
@@ -524,7 +528,7 @@ question: |
 subquestion: |  
   Because you already had a final hearing, received a Civil Judgement Order, or an Order of Possession, you case at the magistrate level is complete.
 
-  Instead of filing an answer you will need to file an appeal if you want to stay in where you are.  You can click the button below to continue with filing an appeal, or if you made a mistake you can restart the tool.
+  Instead of filing an answer you will need to file an appeal if you want to stay where you are.  You can click the button below to continue with filing an appeal, or if you made a mistake you can restart the tool.
 field: answer_appeal
 buttons:
   - Continue to Appeal: appeal
@@ -533,6 +537,7 @@ buttons:
 ga id: woaSuccessExit
 event: success_exit
 question: |
+  [FILE success_exit_2_img, 100%][BR]
   Thank you for using the tool!
 subquestion: |
   We hope this tool was useful.  Once you click exit below, your information will be purged

@@ -1,6 +1,6 @@
 metadata:
   title: |
-    Legal Help for Renters - Informal Hearing Request
+    Renters Rights West Virginia - Informal Hearing Request
   short title: |
     Informal Hearing Request 
   description: |
@@ -8,7 +8,8 @@ metadata:
   authors:
     - name: Dane W. Henry, Esq.
       organization: Legal Aid of West Virginia, Inc.
-  revision_date: 2024-05-13
+  revision_date: 2024-08-12
+  exit url: https://legalaidwv.org/renters-rights-west-virginia
 ---
 features:
   javascript: docassemble.LAWVCommon:data/static/force_lightmode.js
@@ -20,16 +21,66 @@ include:
 objects:
   - client: Individual
 ---
+images:
+  calendar_img: calendar.png
+  contact_img: contact.png
+  icon_form_img: icon_form.png
+  icon_time_img: icon_time.png
+  mailbox_img: mailbox.png
+  people_img: people.png
+  success_exit_img: success_exit.png
+  success_exit_2_img: success_exit_2.png
+---
+ga id: hearingIntroduction
+question: |
+  #### Introduction
+
+  # Welcome to the Renters Rights West Virginia[BR]  
+
+  # Request for an Informal Hearing Tool
+subquestion: |
+  ### Why use this tool?
+  <p class="flex center"><span>This form helps you write a letter to your Housing Authority to request an Informal Hearing to see if you can resolve the issue if a court eviction case is filed.</span></p>  
+
+  ### What to expect
+  <p class="flex center">[FILE icon_time_img, 50px]<span>Depending on your situation this will take between 5 and 15 minutes.</span></p>
+
+  ### What do you need?
+  <p class="flex center">[FILE icon_form_img, 50px]<span>Any paperwork you have from the Housing Authority.  This will contain important information, such as who contacted you and what they are saying you did wrong.</span></p>
+  
+  ***
+  ###Terms of Use:
+  ####<span style="color:black;font-weight:100;">Legal Aid of West Virginia is a non-profit law firm that provides free legal help.  This tool was developed by Legal Aid to provide information and to make it easier to fill out necessary forms.  This tool does not take the place of an attorney-client relationship. Legal Aid is not your attorney.  If you have questions about your specific situation, you should seek legal help.  The information on this tool is based on West Virginia law.  By using this tool, I agree that I have read and understand the information on this page.  If you wish to apply for Legal Aid of West Virginia’s services, you may do so here: [https://legalaidwv.org](https://legalaidwv.org/)
+  
+  <span>
+field: introduction
+buttons:
+  - I Agree: continue
+  - Exit: exit
+    color: danger
+under: |
+
+  ***
+  #### <span style="color:red">Note:</span> Legal Aid of West Virginia does not retain any of the information entered. Sessions are encrypted and only available to the user. At the conclusion of the process, all data entered is wiped to ensure user privacy.
+  ***
+---
 ga id: hearingHASelect
 question: |
+  [FILE contact_img, 100%][BR]
   Which Housing Authority do you want to contact?
 fields:
   - no label: ha
     input type: dropdown
     code: housing_authorities
+right: |
+  ***
+  #### Related Information
+  ***
+  [YOUTUBE YWZX2SDwiy0]
 ---
 ga id: hearingNoticeInfo
 question: |
+  [FILE mailbox_img, 100%][BR]
   Notice Information
 subquestion: |
   Please provide information about the notice you received
@@ -50,6 +101,7 @@ fields:
 ---
 ga id: hearingAvailability
 question: |
+  [FILE calendar_img, 100%][BR]
   Availability
 subquestion: |
   Please provide a few dates you are available for the hearing
@@ -69,6 +121,7 @@ fields:
 ---
 ga id: hearingPersonalInformation
 question: |
+  [FILE people_img, 100%][BR]
   Finally, let's get some information about you
 fields:
   - First Name: client.name.first
@@ -90,7 +143,9 @@ validation code: |
     validation_error('Please enter a valid phone number.', field='client.phone')
 ---
 ga id: hearingTermiantionEndpoint
-question: Final Information
+question: |
+  [FILE success_exit_img, 100%][BR]
+  Final Information
 subquestion: |
   You can download your **Informal Hearing Request**below.  
 attachment:
@@ -111,7 +166,9 @@ under: |
   [LHR Hub](https://legalaidwv.org/)
 ---
 ga id: hearingEvictionEndpoint
-question: Final Information
+question: |
+  [FILE success_exit_img, 100%][BR]
+  Final Information
 subquestion: |
   You can download your **Informal Hearing Request**below.  
 attachment:
@@ -134,6 +191,7 @@ under: |
 ga id: hearingSuccessExit
 event: success_exit
 question: |
+  [FILE success_exit_2_img, 100%][BR]
   Thank you for using the tool!
 subquestion: |
   We hope this tool was useful.  Once you click exit below, your information will be purged
@@ -146,6 +204,8 @@ back button label: |
 ---
 mandatory: True
 code: |
+  if introduction == 'exit':
+    command('exit')
   ha
   notice_type
   date_1

@@ -1,6 +1,6 @@
 metadata:
   title: |
-    Legal Help for Renters - Petition for Appeal
+    Renters Rights West Virginia - Petition for Appeal
   short title: |
     Petition for Appeal
   description: |
@@ -8,7 +8,8 @@ metadata:
   authors:
     - name: Dane W. Henry, Esq.
       organization: Legal Aid of West Virginia, Inc.
-  revision_date: 2024-05-13
+  revision_date: 2024-08-12
+  exit url: https://legalaidwv.org/renters-rights-west-virginia
 ---
 features:
   javascript: docassemble.LAWVCommon:data/static/force_lightmode.js
@@ -21,8 +22,52 @@ objects:
   - p: Individual
   - r: Individual
 ---
+images:
+  icon_form_img: icon_form.png
+  icon_time_img: icon_time.png
+  multi_icons_img: multi_icons.png
+  people_img: people.png
+  room_conditions_img: room_conditions.png
+  service_dog_img: service_dog.png
+  success_exit_img: success_exit.png
+  success_exit_2_img: success_exit_2.png
+---
+ga id: pfaIntroduction
+question: |
+  #### Introduction
+
+  # Welcome to the Renters Rights West Virginia[BR]  
+
+  # Petition for Appeal Tool
+subquestion: |
+  ### Why use this tool?
+  <p class="flex center"><span>This form helps you appeal your eviction case to the Circuit Court, after you have had a hearing in front of the Magistrate Court.</span></p>  
+
+  ### What to expect
+  <p class="flex center">[FILE icon_time_img, 50px]<span>Depending on your situation this will take between 5 and 15 minutes.</span></p>
+
+  ### What do you need?
+  <p class="flex center">[FILE icon_form_img, 50px]<span>Any paperwork you have from the courthouse.  This will contain important information, such as what your landlord claimed against you and what the judgment of the court was.</span></p>
+  
+  ***
+  ###Terms of Use:
+  ####<span style="color:black;font-weight:100;">Legal Aid of West Virginia is a non-profit law firm that provides free legal help.  This tool was developed by Legal Aid to provide information and to make it easier to fill out necessary forms.  This tool does not take the place of an attorney-client relationship. Legal Aid is not your attorney.  If you have questions about your specific situation, you should seek legal help.  The information on this tool is based on West Virginia law.  By using this tool, I agree that I have read and understand the information on this page.  If you wish to apply for Legal Aid of West Virginia’s services, you may do so here: [https://legalaidwv.org](https://legalaidwv.org/)
+  
+  <span>
+field: introduction
+buttons:
+  - I Agree: continue
+  - Exit: exit
+    color: danger
+under: |
+
+  ***
+  #### <span style="color:red">Note:</span> Legal Aid of West Virginia does not retain any of the information entered. Sessions are encrypted and only available to the user. At the conclusion of the process, all data entered is wiped to ensure user privacy.
+  ***
+---
 ga id: pfaCaseInformation
 question: |
+  [FILE multi_icons_img, 100%][BR]
   First, we need to know about the case
 fields:
   - County where case is filed: case_county
@@ -34,9 +79,16 @@ fields:
     datatype: date
     max: |
       ${ today() }
+right: |
+  ***
+  #### Related Information
+  ***
+
+  [Appealing an Eviction Case](https://legalaidwv.org/legal-information/court-eviction-process/)
 ---
 ga id: pfaAppellantInformation
 question: |
+  [FILE people_img, 100%][BR]
   Let's get some information about the case and who is involved
 subquestion: |
   Please enter **your** information
@@ -67,6 +119,7 @@ validation code: |
 ---
 ga id: pfaAppelleeInformation
 question: |
+  [FILE people_img, 100%][BR]
   Now enter information about your **landlord**
 fields:
   - Name on Complaint: p.name
@@ -88,6 +141,7 @@ validation code: |
 ---
 ga id: pfaEvidence
 question: |
+  [FILE room_conditions_img, 100%][BR]
   Do you have evidence of the conditions to include with the appeal?
 subquestion: |
   Evidence can be photos or texts/emails between you and your landlord.
@@ -102,6 +156,7 @@ fields:
 ---
 ga id: pfaAccommodations
 question: |
+  [FILE service_dog_img, 100%][BR]
   Do you require any accommodations in the hearing?
 fields:
   - no label: accommodations
@@ -127,7 +182,9 @@ fields:
     show if: accom_detail['other']
 ---
 ga id: pfaEndpoint
-question: Final Information
+question: |
+  [FILE success_exit_img, 100%][BR]
+  Final Information
 subquestion: |
   You can download the files for the **Petition for Appeal** below.
 
@@ -240,6 +297,7 @@ buttons:
 ga id: pfaSuccessExit
 event: success_exit
 question: |
+  [FILE success_exit_2_img, 100%][BR]
   Thank you for using the tool!
 subquestion: |
   We hope this tool was useful.  Once you click exit below, your information will be purged
@@ -252,6 +310,8 @@ back button label: |
 ---
 mandatory: True
 code: |
+  if introduction == 'exit':
+    command('exit')
   case_county
   if judgment_date <= today().minus(days=20):
     # Judgment date is more than 20 days ago, appeal
