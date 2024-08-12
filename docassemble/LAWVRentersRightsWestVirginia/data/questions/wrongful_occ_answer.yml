@@ -49,6 +49,9 @@ question: |
 
   # Answer to an Eviction (Wrongful Occupation) Tool
 subquestion: |
+  ### Why use this tool?
+  <p class="flex center"><span>This form helps you respond to an eviction case by telling the Magistrate Court and landlord that you are participating in the case. It can help you respond to what is written in the petition.</span></p>  
+
   ### What to expect
   <p class="flex center">[FILE icon_time_img, 50px]<span>Depending on your situation this will take between 5 and 15 minutes.</span></p>
 
