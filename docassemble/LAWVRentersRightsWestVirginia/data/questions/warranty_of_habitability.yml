@@ -8,7 +8,7 @@ metadata:
   authors:
     - name: Dane W. Henry, Esq.
       organization: Legal Aid of West Virginia, Inc.
-  revision_date: 2024-08-12
+  revision_date: 2024-08-19
   exit url: https://legalaidwv.org/renters-rights-west-virginia
 ---
 features:
@@ -69,7 +69,7 @@ under: |
 ga id: warrantyBreach
 question: |
   [FILE habitability_img, 100%][BR]
-  Are any of the following present?
+  Have you had any of these problems with your rental property?
 subquestion: |
   Please select all the apply
 fields: 
@@ -93,10 +93,18 @@ ga id: warrantyDuration
 question: |
   [FILE as_is_paper_img, 100%][BR]
   How long has the problem existed?
-field: duration
-choices:
-  - Since I moved in: move_in
-  - Sometime after I moved in: after
+fields: 
+  - no label: duration
+    input type: radio
+    choices:
+      - Since I moved in: move_in
+      - Sometime after I moved in: after
+  - When did you notice the problem?: problem_date
+    datatype: date
+    max: ${ today() }
+    show if:
+      variable: duration
+      is: "after"
 ---
 ga id: warrantyEvidence
 question: |
@@ -143,7 +151,7 @@ fields:
   - Zip: client.address.zip
   - note: |
       **Landlord's Information**
-  - Landlord's Full Name/Company NameFirst Name: ll.name
+  - Landlord's Full Name/Company Name: ll.name
   - Landlord's Address: ll.address.address
     address autocomplete: True
   - Unit/Apt.: ll.address.unit

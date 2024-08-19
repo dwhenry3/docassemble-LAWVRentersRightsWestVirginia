@@ -8,7 +8,7 @@ metadata:
   authors:
     - name: Dane W. Henry, Esq.
       organization: Legal Aid of West Virginia, Inc.
-  revision_date: 2024-08-12
+  revision_date: 2024-08-19
   exit url: https://legalaidwv.org/renters-rights-west-virginia
 ---
 features:
@@ -40,7 +40,7 @@ question: |
   # Request for an Informal Hearing Tool
 subquestion: |
   ### Why use this tool?
-  <p class="flex center"><span>This form helps you write a letter to your Housing Authority to request an Informal Hearing to see if you can resolve the issue if a court eviction case is filed.</span></p>  
+  <p class="flex center"><span>This form helps you write a letter to your Housing Authority to request an Informal Hearing to see if you can resolve the issue before a court eviction case is filed.</span></p>  
 
   ### What to expect
   <p class="flex center">[FILE icon_time_img, 50px]<span>Depending on your situation this will take between 5 and 15 minutes.</span></p>

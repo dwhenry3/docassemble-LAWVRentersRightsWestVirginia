@@ -8,7 +8,7 @@ metadata:
   authors:
     - name: Dane W. Henry, Esq.
       organization: Legal Aid of West Virginia, Inc.
-  revision_date: 2024-08-12
+  revision_date: 2024-08-19
   exit url: https://legalaidwv.org/renters-rights-west-virginia
 ---
 features:
@@ -84,7 +84,7 @@ right: |
   #### Related Information
   ***
 
-  [Appealing an Eviction Case](https://legalaidwv.org/legal-information/court-eviction-process/)
+  [Appealing an Eviction Case](https://legalaidwv.org/legal-information/appealing-an-eviction-case-to-circuit-court/)
 ---
 ga id: pfaAppellantInformation
 question: |
@@ -142,7 +142,7 @@ validation code: |
 ga id: pfaEvidence
 question: |
   [FILE room_conditions_img, 100%][BR]
-  Do you have evidence of the conditions to include with the appeal?
+  Do you have evidence to include with the appeal?
 subquestion: |
   Evidence can be photos or texts/emails between you and your landlord.
 yesno: evidence
@@ -287,9 +287,9 @@ attachment:
 ---
 event: ineligible
 question: |
-  It appears you encountered a problem
+  ${ failure_title }
 subquestion: |  
-  Reason: ${ failure_reason }  
+  ${ failure_reason }  
 buttons: 
   - Exit: exit
   - Restart: restart
@@ -317,7 +317,8 @@ code: |
     # Judgment date is more than 20 days ago, appeal
     # not entitled as a matter of right, should consult
     # an attorney.
-    failure_reason = "<br>The judgment date was more than twenty (20) days ago.  You cannot appeal as a matter of right, however you might still be able to appeal.<br><br>Contact an attorney to discuss your case further.<br>You can apply for Legal Aid of West Virginia's Services [here](https://legalaidwv.org/get-help/apply-for-help/)."
+    failure_title = "It appears it may be too late to file an appeal or you may need legal help to file an appeal."
+    failure_reason = "An appeal from the Magistrate Court to the Circuit Court must be filed within 20 days from the date of the Magistrate's order. You said that the Magistrate order was entered more than 20 days ago. You cannot appeal as a matter of right. However, you might still be able to appeal.<br><br>Contact an attorney to discuss your case further.<br>You can apply for Legal Aid of West Virginia's Services [here](https://legalaidwv.org/get-help/apply-for-help/)."
     ineligible
   r.name.first
   p.phone_number
