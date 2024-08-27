@@ -8,7 +8,7 @@ metadata:
   authors:
     - name: Dane W. Henry, Esq.
       organization: Legal Aid of West Virginia, Inc.
-  revision_date: 2024-08-19
+  revision_date: 2024-08-27
   exit url: https://legalaidwv.org/renters-rights-west-virginia
 ---
 features:
@@ -21,6 +21,9 @@ include:
 objects:
   - p: Individual
   - r: Individual
+---
+imports:
+  - geopy.distance
 ---
 images:
   icon_form_img: icon_form.png
@@ -198,7 +201,7 @@ buttons:
   - All Done
 ---
 code: |
-  pfa_documents = [civil_information_statement, petition_for_appeal]
+  pfa_documents = [petition_for_appeal_instructions, civil_information_statement, petition_for_appeal]
   if evidence:
     pfa_documents.append(uploads)
   pfa_documents.append(notice_of_stay)
@@ -210,7 +213,7 @@ code: |
 ---
 template: email_all_files
 subject: |
-  LAWV Legal Help for Renters - Petition for Appeal Document Packet
+  Renters Rights West Virginia - Petition for Appeal Document Packet
 content: |
   Your document(s) is/are attached.
 
@@ -219,10 +222,21 @@ content: |
   *NOTE: This email address is not monitored.  Please do not reply to this message.*
 ---
 attachment:
+  - name: petition_for_appeal_instructions
+    filename: petition_for_appeal_instructions
+    pdf template file: petition_for_appeal_instructions.pdf
+    variable name: petition_for_appeal_instructions
+    editable: False
+    fields:
+      - library_address: ${ closest_library + "\n" + libraries[closest_library]["address"] }
+      - court_address: ${ case_county + " County Magistrate Clerk\n" + mag_address[case_county] }
+---
+attachment:
   - name: petition_for_appeal
     filename: petition_for_appeal
     pdf template file: petition_for_appeal.pdf
     variable name: petition_for_appeal
+    editable: False
     fields:
       - "upper_county": ${ case_county.upper() }
       - "case_num": ${ case_num }
@@ -310,6 +324,9 @@ back button label: |
 ---
 mandatory: True
 code: |
+  closest = 999999
+  closest_library = ""
+
   if introduction == 'exit':
     command('exit')
   case_county
@@ -321,6 +338,16 @@ code: |
     failure_reason = "An appeal from the Magistrate Court to the Circuit Court must be filed within 20 days from the date of the Magistrate's order. You said that the Magistrate order was entered more than 20 days ago. You cannot appeal as a matter of right. However, you might still be able to appeal.<br><br>Contact an attorney to discuss your case further.<br>You can apply for Legal Aid of West Virginia's Services [here](https://legalaidwv.org/get-help/apply-for-help/)."
     ineligible
   r.name.first
+
+  ## Library
+  r.address.geocode()
+  cords = (r.address.location.latitude,r.address.location.longitude)
+  for library in libraries:
+    distance = geopy.distance.geodesic(cords, (libraries[library]["lat"], libraries[library]["long"])).miles
+    if distance < closest:
+      closest = distance
+      closest_library = library
+
   p.phone_number
   if evidence:
     uploads

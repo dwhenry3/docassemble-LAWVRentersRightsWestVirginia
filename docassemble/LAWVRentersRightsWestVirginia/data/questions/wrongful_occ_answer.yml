@@ -8,7 +8,7 @@ metadata:
   authors:
     - name: Dane W. Henry, Esq.
       organization: Legal Aid of West Virginia, Inc.
-  revision_date: 2024-08-19
+  revision_date: 2024-08-27
   exit url: https://legalaidwv.org/renters-rights-west-virginia
 ---
 features:
@@ -50,6 +50,9 @@ terms:
     This means your lease has expired and you have not moved.  
   arrears: |
     This means you are behind on rent.
+---
+imports:
+  - geopy.distance
 ---
 ga id: woaIntroduction
 question: |
@@ -283,7 +286,7 @@ question: |
   [FILE habitability_img, 100%][BR]
   Possible Defenses
 subquestion: |
-  <p class="flex center"><span>Now we are going to look through some possible defenses that would help to keep you in your home.</span></p>
+  <p class="flex center"><span>Now we are going to look through some possible defenses that mgiht help your case.</span></p>
 
   We will look for:  
 
@@ -516,6 +519,7 @@ subquestion: |
   % if (defined("rental_allegations['rent']") and rental_allegations["rent"]) or (defined("factory_allegations['arrears']") and factory_allegations["arrears"]):
   % if rent_owed:
   You do owe rent.  
+
   % endif
   % if promise_breach:
   You also stated that the landlord failed to fulfill the promise of: ${ promise }
@@ -548,13 +552,24 @@ subquestion: |
   You can download the PDFs for your **Wrongful Occupation Answer** below.  
   
   You can apply for Legal Aid of West Virginia's Services [here](https://legalaidwv.org/get-help/apply-for-help/).
+
+  ${ action_button_html(woa_bundle.url_for(), classname='btn btn-da btn-primary', label='Download All', icon='file-pdf') }
+  ${ action_button_html(url_action('send_woa_files'), classname='btn btn-da btn-primary', label='Email these to me', icon='envelope') }
 field: generate_wrongful_occupation_answer
+manual attachment list: True
+allow emailing: False
 buttons:
   - All done
+---
+code: |
+  woa_documents = [wrongful_occupation_instructions, wrongful_occupation_answer]
+  woa_bundle = pdf_concatenate(woa_documents, filename=r.name.full() + " Answer to Eviction.pdf")
+---
 attachment:
   - name: wrongful_occupation_answer
     filename: wrongful_occupation_answer
     pdf template file: wrongful_occupation_answer.pdf
+    variable name: wrongful_occupation_answer
     fields:
       - "upper_county": ${ county.upper() }
       - "case_num": ${ case_num }
@@ -582,13 +597,24 @@ subquestion: |
   You can download the PDFs for your **Wrongful Occupation Answer** below.  
   
   You can apply for Legal Aid of West Virginia's Services [here](https://legalaidwv.org/get-help/apply-for-help/).
+
+  ${ action_button_html(woa_long_bundle.url_for(), classname='btn btn-da btn-primary', label='Download All', icon='file-pdf') }
+  ${ action_button_html(url_action('send_woa_long_files'), classname='btn btn-da btn-primary', label='Email these to me', icon='envelope') }
 field: generate_longer_wrongful_occupation_answer
+manual attachment list: True
+allow emailing: False
 buttons:
   - All done
+---
+code: |
+  woa_long_documents = [wrongful_occupation_instructions, wrongful_occupation_answer_long]
+  woa_long_bundle = pdf_concatenate(woa_long_documents, filename=r.name.full() + " Answer to Eviction.pdf")
+---
 attachment:
   - name: wrongful_occupation_answer
     filename: wrongful_occupation_answer
     pdf template file: wrongful_occupation_answer_long.pdf
+    variable name: wrongful_occupation_answer_long
     fields:
       - "upper_county": ${ county.upper() }
       - "case_num": ${ case_num }
@@ -608,6 +634,34 @@ attachment:
       - "d1_phone": ${ r.phone_number }
       - "d1_address_one_line": ${ r.address.on_one_line() }
       - "extended_detail": ${ detail }
+---
+attachment:
+  - name: wrongful_occupation_instructions
+    filename: wrongful_occupation_instructions
+    pdf template file: wrongful_occupation_instructions.pdf
+    variable name: wrongful_occupation_instructions
+    editable: False
+    fields:
+      - library_address: ${ closest_library + "\n" + libraries[closest_library]["address"] }
+      - court_address: ${ county + " County Magistrate Clerk\n" + mag_address[county] }
+---
+event: send_woa_files
+code: |
+  send_email(to=r, attachments=woa_bundle,template=email_all_files)
+---
+event: send_woa_long_files
+code: |
+  send_email(to=r, attachments=woa_long_bundle,template=email_all_files)
+---
+template: email_all_files
+subject: |
+  Renters Rights West Virginia - Answer to Eviction Document Packet
+content: |
+  Your document(s) is/are attached.
+
+  Additional information can always be found at [Legal Aid of West Virginia](https://legalaidwv.org/).
+
+  *NOTE: This email address is not monitored.  Please do not reply to this message.*
 ---
 ga id: woaIneligible
 event: ineligible
@@ -650,11 +704,24 @@ back button label: |
 ---
 mandatory: True
 code: |
+  closest = 999999
+  closest_library = ""
+
   if introduction == 'exit':
     command('exit')
   if served:
     if not hearing_held:
-      hearing_date      
+      hearing_date
+
+      ## Library
+      r.address.geocode()
+      cords = (r.address.location.latitude,r.address.location.longitude)
+      for library in libraries:
+        distance = geopy.distance.geodesic(cords, (libraries[library]["lat"], libraries[library]["long"])).miles
+        if distance < closest:
+          closest = distance
+          closest_library = library
+
       if factory_built:
         factory_allegations
         if factory_response == "yes":
