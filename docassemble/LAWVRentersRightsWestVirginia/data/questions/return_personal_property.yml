@@ -4,7 +4,15 @@ metadata:
   short title: |
     Return Personal Property Letter
   description: |
-    Return Personal Property Letter
+    Write a letter to your former landlord giving notice that you plan to collect
+    personal property left at your rental home.
+  jurisdiction: NAM-US-US+WV
+  LIST_topics:
+    - HO-00-00-00-00
+  tags:
+    - HO-00-00-00-00
+  help_page_url: https://legalaidwv.org/renters-rights-west-virginia
+  help_page_title: Renters Rights West Virginia — Legal Aid of West Virginia
   authors:
     - name: Dane W. Henry, Esq.
       organization: Legal Aid of West Virginia, Inc.
