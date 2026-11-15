@@ -4,7 +4,15 @@ metadata:
   short title: |
     Security Deposit Letter
   description: |
-    Security Deposit Letter
+    Write to your former landlord about your security deposit, the condition of your old
+    rental home, and your new contact information.
+  jurisdiction: NAM-US-US+WV
+  LIST_topics:
+    - HO-00-00-00-00
+  tags:
+    - HO-00-00-00-00
+  help_page_url: https://legalaidwv.org/renters-rights-west-virginia
+  help_page_title: Renters Rights West Virginia — Legal Aid of West Virginia
   authors:
     - name: Dane W. Henry, Esq.
       organization: Legal Aid of West Virginia, Inc.

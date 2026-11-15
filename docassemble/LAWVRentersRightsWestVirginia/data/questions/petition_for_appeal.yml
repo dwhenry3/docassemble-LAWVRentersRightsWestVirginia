@@ -4,7 +4,15 @@ metadata:
   short title: |
     Petition for Appeal
   description: |
-    Petition for Appeal
+    Prepare a petition to appeal an eviction decision from Magistrate Court to Circuit
+    Court in West Virginia.
+  jurisdiction: NAM-US-US+WV
+  LIST_topics:
+    - HO-00-00-00-00
+  tags:
+    - HO-00-00-00-00
+  help_page_url: https://legalaidwv.org/renters-rights-west-virginia
+  help_page_title: Renters Rights West Virginia — Legal Aid of West Virginia
   authors:
     - name: Dane W. Henry, Esq.
       organization: Legal Aid of West Virginia, Inc.
